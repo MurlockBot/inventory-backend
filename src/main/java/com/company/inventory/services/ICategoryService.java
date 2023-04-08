@@ -14,4 +14,6 @@ public interface ICategoryService {
 
     public ResponseEntity<CategoryResponseRest> update(Category category, Long id);
 
+    public ResponseEntity<CategoryResponseRest> delete(Long id);
+
 }

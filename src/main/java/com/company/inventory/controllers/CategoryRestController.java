@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("api/v1")
 public class CategoryRestController {
 
@@ -37,6 +38,12 @@ public class CategoryRestController {
     @PutMapping("/categories/{id}")
     public ResponseEntity<CategoryResponseRest> update(@PathVariable Long id, @RequestBody Category category){
         ResponseEntity<CategoryResponseRest> response = service.update(category, id);
+        return response;
+    }
+
+    @DeleteMapping("/categories/{id}")
+    public ResponseEntity<CategoryResponseRest> deleteById(@PathVariable Long id){
+        ResponseEntity<CategoryResponseRest> response = service.delete(id);
         return response;
     }
 }

@@ -134,4 +134,31 @@ public class CategoryServiceImpl implements ICategoryService{
 
         return new ResponseEntity<CategoryResponseRest>(response, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<CategoryResponseRest> delete(Long id) {
+        CategoryResponseRest response = new CategoryResponseRest();
+        List<Category> lista =  new ArrayList<>();
+
+        try{
+
+            Optional<Category> categoryToDelete = categoryDAO.findById(id);
+
+            if ( categoryToDelete.isPresent() ){
+                categoryDAO.delete(categoryToDelete.get());
+                response.setMetadata("OK", "0", "Respuesta exitosa");
+            } else{
+                response.setMetadata("NO", "-1","Error al buscar el dato, no se encontró ID para eliminar");
+                return new ResponseEntity<CategoryResponseRest>(response, HttpStatus.BAD_REQUEST);
+            }
+
+        } catch (Exception e) {
+
+            response.setMetadata("NO", "-1","Error al consultar servicio en la base de datos");
+            e.getStackTrace();
+            return new ResponseEntity<CategoryResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<CategoryResponseRest>(response, HttpStatus.OK);
+    }
 }
